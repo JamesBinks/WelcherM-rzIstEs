@@ -1,0 +1,88 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\U61055\\source\\repos\\MaerzCalc\\BlazorM\u00E4rzHost\\WelcherM-rzIstEs\\MarchApp\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{358991FB-5A06-BF28-67AF-017C2A8700DE}|MarchApp.csproj|c:\\users\\u61055\\source\\repos\\maerzcalc\\blazorm\u00E4rzhost\\welcherm-rzistes\\marchapp\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{358991FB-5A06-BF28-67AF-017C2A8700DE}|MarchApp.csproj|solutionrelative:pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{358991FB-5A06-BF28-67AF-017C2A8700DE}|MarchApp.csproj|c:\\users\\u61055\\source\\repos\\maerzcalc\\blazorm\u00E4rzhost\\welcherm-rzistes\\marchapp\\layout\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{358991FB-5A06-BF28-67AF-017C2A8700DE}|MarchApp.csproj|solutionrelative:layout\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{358991FB-5A06-BF28-67AF-017C2A8700DE}|MarchApp.csproj|c:\\users\\u61055\\source\\repos\\maerzcalc\\blazorm\u00E4rzhost\\welcherm-rzistes\\marchapp\\pages\\component.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{358991FB-5A06-BF28-67AF-017C2A8700DE}|MarchApp.csproj|solutionrelative:pages\\component.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{358991FB-5A06-BF28-67AF-017C2A8700DE}|MarchApp.csproj|c:\\users\\u61055\\source\\repos\\maerzcalc\\blazorm\u00E4rzhost\\welcherm-rzistes\\marchapp\\wwwroot\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{358991FB-5A06-BF28-67AF-017C2A8700DE}|MarchApp.csproj|solutionrelative:wwwroot\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Component.razor",
+              "DocumentMoniker": "C:\\Users\\U61055\\source\\repos\\MaerzCalc\\BlazorM\u00E4rzHost\\WelcherM-rzIstEs\\MarchApp\\Pages\\Component.razor",
+              "RelativeDocumentMoniker": "Pages\\Component.razor",
+              "ToolTip": "C:\\Users\\U61055\\source\\repos\\MaerzCalc\\BlazorM\u00E4rzHost\\WelcherM-rzIstEs\\MarchApp\\Pages\\Component.razor",
+              "RelativeToolTip": "Pages\\Component.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-22T11:35:54.558Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MainLayout.razor",
+              "DocumentMoniker": "C:\\Users\\U61055\\source\\repos\\MaerzCalc\\BlazorM\u00E4rzHost\\WelcherM-rzIstEs\\MarchApp\\Layout\\MainLayout.razor",
+              "RelativeDocumentMoniker": "Layout\\MainLayout.razor",
+              "ToolTip": "C:\\Users\\U61055\\source\\repos\\MaerzCalc\\BlazorM\u00E4rzHost\\WelcherM-rzIstEs\\MarchApp\\Layout\\MainLayout.razor",
+              "RelativeToolTip": "Layout\\MainLayout.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-22T11:30:29.109Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "index.html",
+              "DocumentMoniker": "C:\\Users\\U61055\\source\\repos\\MaerzCalc\\BlazorM\u00E4rzHost\\WelcherM-rzIstEs\\MarchApp\\wwwroot\\index.html",
+              "RelativeDocumentMoniker": "wwwroot\\index.html",
+              "ToolTip": "C:\\Users\\U61055\\source\\repos\\MaerzCalc\\BlazorM\u00E4rzHost\\WelcherM-rzIstEs\\MarchApp\\wwwroot\\index.html",
+              "RelativeToolTip": "wwwroot\\index.html",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2026-06-22T11:21:19.797Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Home.razor",
+              "DocumentMoniker": "C:\\Users\\U61055\\source\\repos\\MaerzCalc\\BlazorM\u00E4rzHost\\WelcherM-rzIstEs\\MarchApp\\Pages\\Home.razor",
+              "RelativeDocumentMoniker": "Pages\\Home.razor",
+              "ToolTip": "C:\\Users\\U61055\\source\\repos\\MaerzCalc\\BlazorM\u00E4rzHost\\WelcherM-rzIstEs\\MarchApp\\Pages\\Home.razor",
+              "RelativeToolTip": "Pages\\Home.razor",
+              "ViewState": "AgIAAGoAAAAAAAAAAIAywIUAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-06-22T11:20:28.177Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
