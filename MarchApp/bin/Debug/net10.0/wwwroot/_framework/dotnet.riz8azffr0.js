@@ -5,7 +5,7 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
   "mainAssemblyName": "MarchApp",
   "applicationEnvironment": "Development",
   "resources": {
-    "hash": "sha256-fTay8cdi3dRPYRxzP6AwMM95vvavXtIi8+Jhz79y+8M=",
+    "hash": "sha256-HTulyffLEUBU+U5UzKilWGySCTxHgvvbBy4oLJez+nc=",
     "jsModuleNative": [
       {
         "name": "dotnet.native.ikrs475e5v.js"
@@ -1242,16 +1242,16 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
       },
       {
         "virtualPath": "MarchApp.wasm",
-        "name": "MarchApp.y8f042o8a8.wasm",
-        "hash": "sha256-zmZu3EFBquGIbUfnlAqUyngekjNQuZEFcHShDM0i49U=",
+        "name": "MarchApp.3wm1reh9b4.wasm",
+        "hash": "sha256-I211aFK/afsaifOLOjJJqSeK5iqput7FiPjHOr3NJJM=",
         "cache": "force-cache"
       }
     ],
     "pdb": [
       {
         "virtualPath": "MarchApp.pdb",
-        "name": "MarchApp.n4rmwer474.pdb",
-        "hash": "sha256-1/ofKbavGv88Aygc9b7GBMX1Z5uDvSS5Xw+476oj/14=",
+        "name": "MarchApp.8fy3ssy6rk.pdb",
+        "hash": "sha256-BP3aOr8DY9kn/Jo6f5QqvU+stGhzEfVUBBtqYkYKcXM=",
         "cache": "force-cache"
       }
     ],

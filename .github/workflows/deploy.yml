@@ -14,10 +14,10 @@ jobs:
 
       - uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '8.0.x'
+          dotnet-version: "8.0.x"
 
       - name: Publish
-        run: dotnet publish MarchApp/MarchApp.csproj -c Release -o publish -p:BlazorBaseHref=/WelcherM-rzIstEs/
+        run: dotnet publish MarchApp/MarchApp.csproj -c Release -o publish
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
