@@ -17,7 +17,7 @@ jobs:
           dotnet-version: '8.0.x'
 
       - name: Publish
-        run: dotnet publish -c Release -o publish -p:BlazorBaseHref=/WelcherM-rzIstEs/
+        run: dotnet publish MarchApp/MarchApp.csproj -c Release -o publish -p:BlazorBaseHref=/WelcherM-rzIstEs/
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
