@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MarchApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3c82df4ac2274eb47a9e67bc7014c3726078d804")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3e147df264dcd71c3943efa033d9523f7c4ad522")]
 [assembly: System.Reflection.AssemblyProductAttribute("MarchApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MarchApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
