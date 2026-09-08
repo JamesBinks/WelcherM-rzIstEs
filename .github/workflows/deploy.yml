@@ -14,10 +14,13 @@ jobs:
 
       - uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: "8.0.x"
+          dotnet-version: "10.0.x"
 
       - name: Publish
         run: dotnet publish MarchApp/MarchApp.csproj -c Release -o publish
+
+      - name: Set GitHub Pages base path
+        run: sed -i 's|<base href="/" />|<base href="/WelcherM-rzIstEs/" />|' publish/wwwroot/index.html
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
