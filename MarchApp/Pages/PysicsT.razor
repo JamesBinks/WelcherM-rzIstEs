@@ -1,0 +1,337 @@
+﻿@page "/"
+@page "/physics-canvas"
+@inject IJSRuntime JS
+@implements IAsyncDisposable
+
+<div class="scene-container" style="position: relative; width: 100vw; height: 100vh; overflow: hidden;">
+    <canvas id="physicsCanvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 1px solid black;"></canvas>
+
+    <div class="scene" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;">
+        <img class="portrait portrait-left" src="images/images.jpg" alt="Friedrich März" />
+
+        <div class="circle-wrap">
+            <div class="ring ring-outer"></div>
+            <div class="ring ring-inner"></div>
+            <div class="card">
+                <span class="eyebrow">Tag des Jahres</span>
+                <h1 class="day-number">@todaysMarch</h1>
+                <p class="subtitle">des März</p>
+            </div>
+        </div>
+
+        @if (todaysMarch > 1)
+        {
+            <img class="portrait portrait-right" src="images/images.jpg" alt="Friedrich März" />
+        }
+    </div>
+</div>
+
+@code {
+    private DotNetObjectReference<PysicsT>? _objRef;
+    private IJSObjectReference? _module;
+    private int todaysMarch;
+    private List<Ball> _balls = new();
+    private List<Obstacle> _obstacles = new(); 
+    public class ObstacleData
+    {
+        public double X { get; set; }
+        public double Y { get; set; }
+        public double Width { get; set; }
+        public double Height { get; set; }
+    }
+
+    public class CircleObstacleData
+    {
+        public double CenterX { get; set; }
+        public double CenterY { get; set; }
+        public double Radius { get; set; }
+    }
+
+
+    [JSInvokable]
+    public void SetSceneObstacles(ObstacleData[] rects, CircleObstacleData[] circles)
+    {
+        var list = new List<Obstacle>();
+
+        list.AddRange(rects.Select(r => new Obstacle
+        {
+            Shape = ObstacleShape.Rectangle,
+            X = r.X,
+            Y = r.Y,
+            Width = r.Width,
+            Height = r.Height
+        }));
+
+        list.AddRange(circles.Select(c => new Obstacle
+        {
+            Shape = ObstacleShape.Circle,
+            CenterX = c.CenterX,
+            CenterY = c.CenterY,
+            Radius = c.Radius
+        }));
+
+        _obstacles = list;
+    }
+
+    protected override void OnInitialized()
+    {
+        var today = DateTime.Today;
+        var firstOfMarch = new DateTime(today.Year, 3, 1);
+        var diff = today - firstOfMarch;
+        todaysMarch = Convert.ToInt32(diff.Days) + 1;
+
+        if (todaysMarch < 0)
+        {
+            var marchLastYear = new DateTime(today.Year - 1, 3, 1);
+            todaysMarch = Convert.ToInt32((today - marchLastYear).Days) + 1;
+        }
+
+        for (int i = 0; i < todaysMarch -2; i++)
+        {
+            _balls.Add(new Ball
+            {
+                X = 30 + i * 20,
+                Y = -i * 10,
+                Radius = 15,
+                ImageUrl = "images/images.jpg"
+            });
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            _objRef = DotNetObjectReference.Create(this);
+            _module = await JS.InvokeAsync<IJSObjectReference>("import", "./js/physics.js");
+
+            // Send obstacle layout once, so JS knows what to draw
+            var obstacleData = _obstacles.Select(o => new { x = o.X, y = o.Y, width = o.Width, height = o.Height }).ToArray();
+            await _module.InvokeVoidAsync("startLoop", _objRef, "physicsCanvas", obstacleData);
+        }
+    }
+
+    private double _canvasWidth = 600;
+    private double _canvasHeight = 400;
+
+    [JSInvokable]
+    public void SetBounds(double width, double height)
+    {
+        _canvasWidth = width;
+        _canvasHeight = height;
+    }
+    [JSInvokable]
+    public object[] Tick()
+    {
+        const double gravity = 0.6;
+        const double restitution = 0.7;
+        const double velocityThreshold = 0.3;  // below this, treat as "at rest"
+        const double friction = 0.98;          // gentle horizontal damping every frame
+
+        foreach (var b in _balls)
+        {
+            b.VelocityY += gravity;
+            b.X += b.VelocityX;
+            b.Y += b.VelocityY;
+
+            // Floor
+            if (b.Y + b.Radius >= _canvasHeight)
+            {
+                b.Y = _canvasHeight - b.Radius;
+
+                if (Math.Abs(b.VelocityY) < velocityThreshold)
+                {
+                    b.VelocityY = 0; // kill tiny bounces instead of letting them shrink forever
+                }
+                else
+                {
+                    b.VelocityY *= -restitution;
+                }
+            }
+
+            // Ceiling
+            if (b.Y - b.Radius < 0)
+            {
+                b.Y = b.Radius;
+                b.VelocityY *= -restitution;
+            }
+
+            // Walls
+            if (b.X - b.Radius < 0)
+            {
+                b.X = b.Radius;
+                b.VelocityX *= -restitution;
+            }
+            if (b.X + b.Radius > _canvasWidth)
+            {
+                b.X = _canvasWidth - b.Radius;
+                b.VelocityX *= -restitution;
+            }
+
+            // Friction when resting on the floor — bleeds off horizontal jitter
+            if (b.Y + b.Radius >= _canvasHeight - 0.5)
+            {
+                b.VelocityX *= friction;
+                if (Math.Abs(b.VelocityX) < 0.05) b.VelocityX = 0;
+            }
+
+            ResolveObstacleCollision(b, restitution);
+        }
+
+        ResolveBallCollisions();
+
+        return _balls.Select(b => new { x = b.X, y = b.Y, radius = b.Radius, image = b.ImageUrl }).ToArray();
+    }
+
+    private void ResolveObstacleCollision(Ball b, double restitution)
+    {
+        foreach (var o in _obstacles)
+        {
+            if (o.Shape == ObstacleShape.Rectangle)
+            {
+                ResolveRectCollision(b, o, restitution);
+            }
+            else
+            {
+                ResolveCircleCollision(b, o, restitution);
+            }
+        }
+    }
+
+    private void ResolveRectCollision(Ball b, Obstacle o, double restitution)
+    {
+        double closestX = Math.Clamp(b.X, o.X, o.X + o.Width);
+        double closestY = Math.Clamp(b.Y, o.Y, o.Y + o.Height);
+
+        double dx = b.X - closestX;
+        double dy = b.Y - closestY;
+        double distSq = dx * dx + dy * dy;
+
+        if (distSq < b.Radius * b.Radius)
+        {
+            double dist = Math.Sqrt(distSq);
+            if (dist == 0) { dist = 0.01; dx = 0.01; dy = 0; }
+
+            double nx = dx / dist;
+            double ny = dy / dist;
+            double overlap = b.Radius - dist;
+
+            b.X += nx * overlap;
+            b.Y += ny * overlap;
+
+            double vDotN = b.VelocityX * nx + b.VelocityY * ny;
+            b.VelocityX -= (1 + restitution) * vDotN * nx;
+            b.VelocityY -= (1 + restitution) * vDotN * ny;
+        }
+    }
+
+    private void ResolveCircleCollision(Ball b, Obstacle o, double restitution)
+    {
+        double dx = b.X - o.CenterX;
+        double dy = b.Y - o.CenterY;
+        double dist = Math.Sqrt(dx * dx + dy * dy);
+        double minDist = b.Radius + o.Radius;
+
+        if (dist < minDist)
+        {
+            if (dist == 0) { dist = 0.01; dx = 0.01; dy = 0; }
+
+            double nx = dx / dist;
+            double ny = dy / dist;
+            double overlap = minDist - dist;
+
+            // Obstacle is static, so the ball absorbs the full correction
+            b.X += nx * overlap;
+            b.Y += ny * overlap;
+
+            double vDotN = b.VelocityX * nx + b.VelocityY * ny;
+            b.VelocityX -= (1 + restitution) * vDotN * nx;
+            b.VelocityY -= (1 + restitution) * vDotN * ny;
+        }
+    }
+
+    private void ResolveBallCollisions()
+    {
+        const double slop = 0.5;              // allowed overlap before correcting, avoids micro-jitter
+        const double correctionPercent = 0.6; // how aggressively to push apart (less than 1.0 = softer)
+        const double restVelocityThreshold = 0.2;
+
+        for (int i = 0; i < _balls.Count; i++)
+        {
+            for (int j = i + 1; j < _balls.Count; j++)
+            {
+                var a = _balls[i];
+                var b = _balls[j];
+
+                double dx = b.X - a.X;
+                double dy = b.Y - a.Y;
+                double dist = Math.Sqrt(dx * dx + dy * dy);
+                double minDist = a.Radius + b.Radius;
+
+                if (dist < minDist)
+                {
+                    if (dist == 0) { dist = 0.01; dx = 0.01; dy = 0; }
+
+                    double nx = dx / dist;
+                    double ny = dy / dist;
+
+                    // --- Position correction, softened with slop ---
+                    double overlap = Math.Max(minDist - dist - slop, 0);
+                    if (overlap > 0)
+                    {
+                        double correction = overlap * correctionPercent / 2;
+                        a.X -= nx * correction;
+                        a.Y -= ny * correction;
+                        b.X += nx * correction;
+                        b.Y += ny * correction;
+                    }
+
+                    // --- Velocity resolution ---
+                    double vaN = a.VelocityX * nx + a.VelocityY * ny;
+                    double vbN = b.VelocityX * nx + b.VelocityY * ny;
+                    double diff = vaN - vbN;
+
+                    // Only resolve if actually approaching each other (diff > 0),
+                    // and skip near-zero relative velocity to avoid micro-jitter
+                    if (diff > restVelocityThreshold)
+                    {
+                        a.VelocityX -= diff * nx;
+                        a.VelocityY -= diff * ny;
+                        b.VelocityX += diff * nx;
+                        b.VelocityY += diff * ny;
+                    }
+                }
+            }
+        }
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (_module is not null)
+        {
+            try { await _module.DisposeAsync(); } catch { }
+        }
+        _objRef?.Dispose();
+    }
+
+    private class Ball
+    {
+        public double X, Y, VelocityX, VelocityY;
+        public double Radius;
+        public string Color = "red";
+        public string ImageUrl = "images/images.jpg";
+    }
+
+    private enum ObstacleShape { Rectangle, Circle }
+
+    private class Obstacle
+    {
+        public ObstacleShape Shape;
+
+        // Rectangle fields
+        public double X, Y, Width, Height;
+
+        // Circle fields
+        public double CenterX, CenterY, Radius;
+    }
+}

@@ -32,16 +32,16 @@ build_property.EnableCodeStyleSeverity =
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/U61055/source/repos/MaerzCalc/BlazorMärzHost/WelcherM-rzIstEs/MarchApp/Pages/Component.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29tcG9uZW50LnJhem9y
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/U61055/source/repos/MaerzCalc/BlazorMärzHost/WelcherM-rzIstEs/MarchApp/Pages/Home.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSG9tZS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/U61055/source/repos/MaerzCalc/BlazorMärzHost/WelcherM-rzIstEs/MarchApp/Pages/NotFound.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTm90Rm91bmQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/U61055/source/repos/MaerzCalc/BlazorMärzHost/WelcherM-rzIstEs/MarchApp/Pages/PysicsT.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHlzaWNzVC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/U61055/source/repos/MaerzCalc/BlazorMärzHost/WelcherM-rzIstEs/MarchApp/_Imports.razor]
