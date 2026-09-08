@@ -13,13 +13,19 @@ body {
 }
 
 .scene {
-    min-height: 100vh;
+    min-height: calc(100vh - 4rem);
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 80px;
     padding: 40px;
     box-sizing: border-box;
+}
+
+@media (max-width: 640px) {
+    .scene {
+        min-height: calc(100vh - 3.5rem);
+    }
 }
 
 .portrait {
